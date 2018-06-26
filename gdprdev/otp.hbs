@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+   <body>
+      <tr>
+         <td>
+            <div style="padding:20.0px;line-height:18.0px;border:1px solid #f1f1f1">
+               <div style="background-color:rgb(104,211,241);height:65.0px">
+                  <a style="float:left;margin:7.0px 0.0px 0.0px 20.0px">
+                     <h2 class="mainh2" >MDM Enroll Device</h2>
+                  </a>
+               </div>
+               <br>
+               <table style="border-collapse:collapse">
+                  <tbody>
+                     <tr>
+                        <td style="padding-bottom:15px;line-height:25px">Dear <b>{{user_name}}</b>,<br><br>Invite, to enroll your iOS device. Follow the instructions given below to enroll your device.</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <table style="border-collapse:collapse">
+                  <tbody>
+                     <tr>
+                        <td nowrap="" valign="top" style="padding-bottom:15px;line-height:25px">Step 1:</td>
+                        <td style="padding-bottom:15px;line-height:25px">Paste the URL given below on <b>Safari browser</b>:<br></td>
+                     </tr>
+                     {{!-- <tr>
+                        <td colspan="2" style="text-align:center;padding-bottom:25px"><a href={{http_link}} style="background-color:#f9f9f9;padding:10px" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=https://zmdm.co/4mdaq&amp;source=gmail&amp;ust=1528987717448000&amp;usg=AFQjCNHN39_sceftvS-HOOReG3SrmgOAhQ"> https://zmdm.co/4mdaq</a></td>
+                     </tr> --}}
+                        <tr>
+                        <td colspan="2" style="text-align:center;padding-bottom:25px"><a href={{http_link}} style="background-color:#ebf8ff;color:#2b82d2"> {{http_link}}</a></td>
+                     </tr>
+                     <tr>
+                        <td nowrap="" valign="top" style="padding-bottom:15px;line-height:25px">Step 2:</td>
+                        <td style="padding-bottom:15px;line-height:25px">Provide the following OTP</td>
+                     </tr>
+                     <tr>
+                        <td colspan="2" style="text-align:center;font-size:20px;padding:10px;padding-bottom:15px;line-height:25px;width:100%!important;background-color:#ebf8ff;color:#2b82d2"> {{opt_string}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <br>
+               <table>
+                  <tbody>
+                     <tr>
+                        <td style="padding-bottom:15px;line-height:20px;color:#666"><b>Note:</b><br>1. In case you are having trouble with the above URL or OTP, contact Admim (admin@mail.com)  </td>
+                     </tr>
+                     <tr>
+                        <td style="padding-bottom:15px;line-height:25px">Thanks, <br>Admin Team</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </td>
+      </tr>
+   </body>
+</html>

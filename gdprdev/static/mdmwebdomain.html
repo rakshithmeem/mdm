@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 400px;
+            /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Webshortcuts</h2>
+
+    <p>Profile Name
+        <input type="text" id="webdomainprofilename" name="webdomainprofilename" />
+    </p>
+    <p>OS
+        <select id="oslist" name="oslist">
+            <option value="Apple" type="text">Android</option>
+            <option value="Android" type="text">Apple</option>
+        </select>
+        <p>
+
+
+            <script>
+
+                function sendWebDomains() {
+
+                    xhttp = new XMLHttpRequest();
+                    var url = "/meem/profiles/managedwebdomains";
+                    xhttp.open("POST", url, true);
+                    xhttp.setRequestHeader("Content-type", "application/json");
+                    xhttp.onreadystatechange = function () {
+                        if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                        }
+
+                    }
+
+                    var tokenID = sessionStorage.getItem("token", tokenID);
+                    var profilename = document.getElementById("webdomainprofilename").value;
+                    var os = document.getElementById("oslist").value;
+                    var os = document.getElementById("webdomains").value;
+
+
+                    var data = JSON.stringify({
+
+                        "tokenID": tokenID,
+                        "profilename": profilename,
+                        "OS": os,
+                        "“WebDomains”": webdomains,
+                    });
+
+                    xhttp.send(data);
+
+                }
+
+            </script>
+
+</body>
+
+</html>

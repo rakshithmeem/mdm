@@ -1,0 +1,105 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+  <title>ServiceStack Send Complex Form (Synchronously)</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <style>
+    label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="background-color:#bbb;">
+
+
+    <h2>Enter Login Details </h2>
+
+    <p>Name
+      <input type="text" id="namelogin" name="namelogin" />
+    </p>
+    <p>Email
+      <input type="text" id="emaillogin" name="emaillogin" />
+    </p>
+    <p>Password
+      <input type="password" id="passwordlogin" name="passwordlogin" />
+    </p>
+
+    <p>
+      <button onclick="LoginUser()">Login</button>
+    </p>
+  </div>
+
+  <form method="get" id="enrollForm" action="/meem/pageloader/enroll-form">
+  </form>
+  <form method="get" id="regForm" action="/meem/pageloader/sign-up">
+  </form>
+
+  <script>
+    function LoginUser() {
+
+      var name = document.getElementById("namelogin").value;
+      var password = document.getElementById("passwordlogin").value;
+      var email = document.getElementById("emaillogin").value;
+
+      xhttp = new XMLHttpRequest();
+      var url = "/meem/auth/login";
+      xhttp.open("POST", url, true);
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.onreadystatechange = function () {
+
+        if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 201) {
+
+          var json = JSON.parse(xhttp.responseText);
+
+          updateTokenID(json.tokenID);
+          loadEnrollPage();
+
+        }
+        if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 401) {
+
+          var json = JSON.parse(xhttp.responseText);
+          if (json.message == "UnAuthorized, emailID not registered") {
+
+            alert("Email Not registered");
+            loadRegistrationPage();
+          }
+          else if (json.message == "UnAuthorized, password not matching") {
+
+            alert("Password Incorrect");
+
+          }
+
+        }
+      }
+
+      var data = JSON.stringify({ "username": name, "password": password, "email": email });
+      xhttp.send(data);
+    }
+
+    function updateTokenID(tokenID) {
+
+      sessionStorage.setItem("token", tokenID);
+    }
+    function loadEnrollPage() {
+
+      document.getElementById('enrollForm').submit();
+    }
+    function loadRegistrationPage() {
+
+      document.getElementById('regForm').submit();
+    }
+
+
+
+  </script>
+
+
+</body>
+
+</html>

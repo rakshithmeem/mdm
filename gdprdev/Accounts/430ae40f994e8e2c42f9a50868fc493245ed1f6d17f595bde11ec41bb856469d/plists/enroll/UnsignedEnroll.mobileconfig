@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>PayloadContent</key>
+    <array>
+      <dict>
+        <key>Password</key>
+        <string>test123</string>
+        <key>PayloadCertificateFileName</key>
+        <string>Identity.p12</string>
+        <key>PayloadContent</key>
+        <data>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</data>
+        <key>PayloadDescription</key>
+        <string>Adds a PKCS#12-formatted certificate</string>
+        <key>PayloadDisplayName</key>
+        <string>Identity.p12</string>
+        <key>PayloadIdentifier</key>
+        <string>com.apple.security.pkcs12.5ba79d80-786d-11e8-8199-4d1f5494fac6</string>
+        <key>PayloadType</key>
+        <string>com.apple.security.pkcs12</string>
+        <key>PayloadUUID</key>
+        <string>5ba79d80-786d-11e8-8199-4d1f5494fac6</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+      </dict>
+      <dict>
+        <key>AccessRights</key>
+        <integer>8191</integer>
+        <key>CheckInURL</key>
+        <string>https://192.168.0.51:8080/meem/mdm/apple/checkin?id=430ae40f994e8e2c42f9a50868fc493245ed1f6d17f595bde11ec41bb856469d</string>
+        <key>CheckOutWhenRemoved</key>
+        <false/>
+        <key>IdentityCertificateUUID</key>
+        <string>5ba79d80-786d-11e8-8199-4d1f5494fac6</string>
+        <key>PayloadDescription</key>
+        <string>Configures MobileDeviceManagement.</string>
+        <key>PayloadIdentifier</key>
+        <string>com.apple.mdm.5ba79d81-786d-11e8-8199-4d1f5494fac6</string>
+        <key>PayloadOrganization</key>
+        <string>Meem Memory Pty Ltd</string>
+        <key>PayloadType</key>
+        <string>com.apple.mdm</string>
+        <key>PayloadUUID</key>
+        <string>5ba79d81-786d-11e8-8199-4d1f5494fac6</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>ServerURL</key>
+        <string>https://192.168.0.51:8080/meem/mdm/apple/server?id=430ae40f994e8e2c42f9a50868fc493245ed1f6d17f595bde11ec41bb856469d</string>
+        <key>SignMessage</key>
+        <false/>
+        <key>Topic</key>
+        <string>com.apple.mgmt.External.137361e7-595d-4adf-a00e-fea94c8f7230</string>
+        <key>UseDevelopmentAPNS</key>
+        <false/>
+      </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>EnrollDevice</string>
+    <key>PayloadIdentifier</key>
+    <string>com.apple.mgmt.External.137361e7-595d-4adf-a00e-fea94c8f7230</string>
+    <key>PayloadOrganization</key>
+    <string>Meem Memory Pty Ltd</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>5ba79d82-786d-11e8-8199-4d1f5494fac6</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+  </dict>
+</plist>

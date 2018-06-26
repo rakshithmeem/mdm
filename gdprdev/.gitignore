@@ -1,0 +1,8 @@
+node_modules/
+*.swp
+path/
+package-lock.json
+logs/*.log
+plists/enroll/
+tmp/*
+

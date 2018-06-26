@@ -1,0 +1,643 @@
+<!doctype html>
+<html ng-app>
+   <head>
+      <title>ServiceStack Send Complex Form (Synchronously)</title>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <style>
+         label {
+         display: inline-block;
+         width: 100px;
+         text-align: right;
+         margin-right: 20px;
+         }
+      </style>
+   </head>
+   <body>
+      <p align="right">
+         <input type="button" onclick="LogoutUser()" value="Logout" style="float: right;">
+      </p>
+      <p>
+      <form action="/meem/pageloader/enrollconfig" method="get">
+         <button type="submit" method="get">Enroll Device</button>
+      </form>
+      </p>
+      <hr>
+      <p>
+         <button onclick="getDevicesList()">List Enrolled Device</button>
+      </p>
+      <p>
+      <form action="/meem/pageloader/mdm" method="get">
+         <button type="submit" method="get">Add/Remove Device Profiles</button>
+      </form>
+      </p>
+      <!-- <p><button onclick="getSettings()">List Enrollment settings</button></p>
+         <p><button onclick="getAppleCertificate()">List iOS APN Cert details</button></p> -->
+      <hr>
+      <div style="background-color:#bbb;">
+         <h2>Create Csr for Apple Signing </h2>
+         <p>Name
+            <input type="text" id="name" name="name" />
+         </p>
+         <p>Email (associated with Apple ID)
+            <input type="text" id="email" name="email" />
+         </p>
+         <!-- <p>Country Code <input type="text" id="countrycode" name="countrycode" /></p> -->
+         <p>
+            Country
+            <select id="countrycode">
+               <option value="AF">Afghanistan</option>
+               <option value="AX">Åland Islands</option>
+               <option value="AL">Albania</option>
+               <option value="DZ">Algeria</option>
+               <option value="AS">American Samoa</option>
+               <option value="AD">Andorra</option>
+               <option value="AO">Angola</option>
+               <option value="AI">Anguilla</option>
+               <option value="AQ">Antarctica</option>
+               <option value="AG">Antigua and Barbuda</option>
+               <option value="AR">Argentina</option>
+               <option value="AM">Armenia</option>
+               <option value="AW">Aruba</option>
+               <option value="AU">Australia</option>
+               <option value="AT">Austria</option>
+               <option value="AZ">Azerbaijan</option>
+               <option value="BS">Bahamas</option>
+               <option value="BH">Bahrain</option>
+               <option value="BD">Bangladesh</option>
+               <option value="BB">Barbados</option>
+               <option value="BY">Belarus</option>
+               <option value="BE">Belgium</option>
+               <option value="BZ">Belize</option>
+               <option value="BJ">Benin</option>
+               <option value="BM">Bermuda</option>
+               <option value="BT">Bhutan</option>
+               <option value="BO">Bolivia, Plurinational State of</option>
+               <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+               <option value="BA">Bosnia and Herzegovina</option>
+               <option value="BW">Botswana</option>
+               <option value="BV">Bouvet Island</option>
+               <option value="BR">Brazil</option>
+               <option value="IO">British Indian Ocean Territory</option>
+               <option value="BN">Brunei Darussalam</option>
+               <option value="BG">Bulgaria</option>
+               <option value="BF">Burkina Faso</option>
+               <option value="BI">Burundi</option>
+               <option value="KH">Cambodia</option>
+               <option value="CM">Cameroon</option>
+               <option value="CA">Canada</option>
+               <option value="CV">Cape Verde</option>
+               <option value="KY">Cayman Islands</option>
+               <option value="CF">Central African Republic</option>
+               <option value="TD">Chad</option>
+               <option value="CL">Chile</option>
+               <option value="CN">China</option>
+               <option value="CX">Christmas Island</option>
+               <option value="CC">Cocos (Keeling) Islands</option>
+               <option value="CO">Colombia</option>
+               <option value="KM">Comoros</option>
+               <option value="CG">Congo</option>
+               <option value="CD">Congo, the Democratic Republic of the</option>
+               <option value="CK">Cook Islands</option>
+               <option value="CR">Costa Rica</option>
+               <option value="CI">Côte d'Ivoire</option>
+               <option value="HR">Croatia</option>
+               <option value="CU">Cuba</option>
+               <option value="CW">Curaçao</option>
+               <option value="CY">Cyprus</option>
+               <option value="CZ">Czech Republic</option>
+               <option value="DK">Denmark</option>
+               <option value="DJ">Djibouti</option>
+               <option value="DM">Dominica</option>
+               <option value="DO">Dominican Republic</option>
+               <option value="EC">Ecuador</option>
+               <option value="EG">Egypt</option>
+               <option value="SV">El Salvador</option>
+               <option value="GQ">Equatorial Guinea</option>
+               <option value="ER">Eritrea</option>
+               <option value="EE">Estonia</option>
+               <option value="ET">Ethiopia</option>
+               <option value="FK">Falkland Islands (Malvinas)</option>
+               <option value="FO">Faroe Islands</option>
+               <option value="FJ">Fiji</option>
+               <option value="FI">Finland</option>
+               <option value="FR">France</option>
+               <option value="GF">French Guiana</option>
+               <option value="PF">French Polynesia</option>
+               <option value="TF">French Southern Territories</option>
+               <option value="GA">Gabon</option>
+               <option value="GM">Gambia</option>
+               <option value="GE">Georgia</option>
+               <option value="DE">Germany</option>
+               <option value="GH">Ghana</option>
+               <option value="GI">Gibraltar</option>
+               <option value="GR">Greece</option>
+               <option value="GL">Greenland</option>
+               <option value="GD">Grenada</option>
+               <option value="GP">Guadeloupe</option>
+               <option value="GU">Guam</option>
+               <option value="GT">Guatemala</option>
+               <option value="GG">Guernsey</option>
+               <option value="GN">Guinea</option>
+               <option value="GW">Guinea-Bissau</option>
+               <option value="GY">Guyana</option>
+               <option value="HT">Haiti</option>
+               <option value="HM">Heard Island and McDonald Islands</option>
+               <option value="VA">Holy See (Vatican City State)</option>
+               <option value="HN">Honduras</option>
+               <option value="HK">Hong Kong</option>
+               <option value="HU">Hungary</option>
+               <option value="IS">Iceland</option>
+               <option value="IN">India</option>
+               <option value="ID">Indonesia</option>
+               <option value="IR">Iran, Islamic Republic of</option>
+               <option value="IQ">Iraq</option>
+               <option value="IE">Ireland</option>
+               <option value="IM">Isle of Man</option>
+               <option value="IL">Israel</option>
+               <option value="IT">Italy</option>
+               <option value="JM">Jamaica</option>
+               <option value="JP">Japan</option>
+               <option value="JE">Jersey</option>
+               <option value="JO">Jordan</option>
+               <option value="KZ">Kazakhstan</option>
+               <option value="KE">Kenya</option>
+               <option value="KI">Kiribati</option>
+               <option value="KP">Korea, Democratic People's Republic of</option>
+               <option value="KR">Korea, Republic of</option>
+               <option value="KW">Kuwait</option>
+               <option value="KG">Kyrgyzstan</option>
+               <option value="LA">Lao People's Democratic Republic</option>
+               <option value="LV">Latvia</option>
+               <option value="LB">Lebanon</option>
+               <option value="LS">Lesotho</option>
+               <option value="LR">Liberia</option>
+               <option value="LY">Libya</option>
+               <option value="LI">Liechtenstein</option>
+               <option value="LT">Lithuania</option>
+               <option value="LU">Luxembourg</option>
+               <option value="MO">Macao</option>
+               <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+               <option value="MG">Madagascar</option>
+               <option value="MW">Malawi</option>
+               <option value="MY">Malaysia</option>
+               <option value="MV">Maldives</option>
+               <option value="ML">Mali</option>
+               <option value="MT">Malta</option>
+               <option value="MH">Marshall Islands</option>
+               <option value="MQ">Martinique</option>
+               <option value="MR">Mauritania</option>
+               <option value="MU">Mauritius</option>
+               <option value="YT">Mayotte</option>
+               <option value="MX">Mexico</option>
+               <option value="FM">Micronesia, Federated States of</option>
+               <option value="MD">Moldova, Republic of</option>
+               <option value="MC">Monaco</option>
+               <option value="MN">Mongolia</option>
+               <option value="ME">Montenegro</option>
+               <option value="MS">Montserrat</option>
+               <option value="MA">Morocco</option>
+               <option value="MZ">Mozambique</option>
+               <option value="MM">Myanmar</option>
+               <option value="NA">Namibia</option>
+               <option value="NR">Nauru</option>
+               <option value="NP">Nepal</option>
+               <option value="NL">Netherlands</option>
+               <option value="NC">New Caledonia</option>
+               <option value="NZ">New Zealand</option>
+               <option value="NI">Nicaragua</option>
+               <option value="NE">Niger</option>
+               <option value="NG">Nigeria</option>
+               <option value="NU">Niue</option>
+               <option value="NF">Norfolk Island</option>
+               <option value="MP">Northern Mariana Islands</option>
+               <option value="NO">Norway</option>
+               <option value="OM">Oman</option>
+               <option value="PK">Pakistan</option>
+               <option value="PW">Palau</option>
+               <option value="PS">Palestinian Territory, Occupied</option>
+               <option value="PA">Panama</option>
+               <option value="PG">Papua New Guinea</option>
+               <option value="PY">Paraguay</option>
+               <option value="PE">Peru</option>
+               <option value="PH">Philippines</option>
+               <option value="PN">Pitcairn</option>
+               <option value="PL">Poland</option>
+               <option value="PT">Portugal</option>
+               <option value="PR">Puerto Rico</option>
+               <option value="QA">Qatar</option>
+               <option value="RE">Réunion</option>
+               <option value="RO">Romania</option>
+               <option value="RU">Russian Federation</option>
+               <option value="RW">Rwanda</option>
+               <option value="BL">Saint Barthélemy</option>
+               <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+               <option value="KN">Saint Kitts and Nevis</option>
+               <option value="LC">Saint Lucia</option>
+               <option value="MF">Saint Martin (French part)</option>
+               <option value="PM">Saint Pierre and Miquelon</option>
+               <option value="VC">Saint Vincent and the Grenadines</option>
+               <option value="WS">Samoa</option>
+               <option value="SM">San Marino</option>
+               <option value="ST">Sao Tome and Principe</option>
+               <option value="SA">Saudi Arabia</option>
+               <option value="SN">Senegal</option>
+               <option value="RS">Serbia</option>
+               <option value="SC">Seychelles</option>
+               <option value="SL">Sierra Leone</option>
+               <option value="SG">Singapore</option>
+               <option value="SX">Sint Maarten (Dutch part)</option>
+               <option value="SK">Slovakia</option>
+               <option value="SI">Slovenia</option>
+               <option value="SB">Solomon Islands</option>
+               <option value="SO">Somalia</option>
+               <option value="ZA">South Africa</option>
+               <option value="GS">South Georgia and the South Sandwich Islands</option>
+               <option value="SS">South Sudan</option>
+               <option value="ES">Spain</option>
+               <option value="LK">Sri Lanka</option>
+               <option value="SD">Sudan</option>
+               <option value="SR">Suriname</option>
+               <option value="SJ">Svalbard and Jan Mayen</option>
+               <option value="SZ">Swaziland</option>
+               <option value="SE">Sweden</option>
+               <option value="CH">Switzerland</option>
+               <option value="SY">Syrian Arab Republic</option>
+               <option value="TW">Taiwan, Province of China</option>
+               <option value="TJ">Tajikistan</option>
+               <option value="TZ">Tanzania, United Republic of</option>
+               <option value="TH">Thailand</option>
+               <option value="TL">Timor-Leste</option>
+               <option value="TG">Togo</option>
+               <option value="TK">Tokelau</option>
+               <option value="TO">Tonga</option>
+               <option value="TT">Trinidad and Tobago</option>
+               <option value="TN">Tunisia</option>
+               <option value="TR">Turkey</option>
+               <option value="TM">Turkmenistan</option>
+               <option value="TC">Turks and Caicos Islands</option>
+               <option value="TV">Tuvalu</option>
+               <option value="UG">Uganda</option>
+               <option value="UA">Ukraine</option>
+               <option value="AE">United Arab Emirates</option>
+               <option value="GB">United Kingdom</option>
+               <option value="US">United States</option>
+               <option value="UM">United States Minor Outlying Islands</option>
+               <option value="UY">Uruguay</option>
+               <option value="UZ">Uzbekistan</option>
+               <option value="VU">Vanuatu</option>
+               <option value="VE">Venezuela, Bolivarian Republic of</option>
+               <option value="VN">Viet Nam</option>
+               <option value="VG">Virgin Islands, British</option>
+               <option value="VI">Virgin Islands, U.S.</option>
+               <option value="WF">Wallis and Futuna</option>
+               <option value="EH">Western Sahara</option>
+               <option value="YE">Yemen</option>
+               <option value="ZM">Zambia</option>
+               <option value="ZW">Zimbabwe</option>
+            </select>
+         </p>
+         <p>
+            <button onclick="sendEnrollDetails()">Submit</button>
+         </p>
+      </div>
+      <hr>
+      <div style="background-color:#bbb;">
+         <form action="/meem/enrollment/appleCSR" method="get">
+            <h2>Download Csr for Apple Signing</h2>
+            <p>
+               <input type="hidden" name="tokenID" value="-----" id="AuthtokenInDownload" />
+               <button type="submit" onclick="DownloadApns()" value="Submit" >Download</button> 
+            </p>
+         </form>
+      </div>
+      <hr>
+      <div style="background-color:#bbb;">
+         <h2>Upload Apple Signed Push Certificate</h2>
+         <p></p>
+         <form action="/meem/enrollment/applepemupload" method="POST" enctype="multipart/form-data">
+            Select File to upload:
+            <input type="file" name="userFile" required/>
+            <input type="hidden" name="tokenID" value="-----" id="Authtoken" />
+            <button type="submit" onclick="UploadFile()" value="Submit" >Upload</button>
+         </form>
+         <!-- <form id="uploadform" enctype="multipart/form-data;application/json">
+            Select File to upload:
+            <input type="file" name="userFile"> 
+            <input type="text" name="tokenID" value="123">
+            <button onclick="UploadFile()">Login</button>
+            </form> -->
+         <!-- <input id="the-file" type="file" name="userFile" >
+            <button onclick="UploadFile()">Login</button> -->
+      </div>
+      <hr>
+
+      <div style="background-color:#bbb;">
+         <h2>Enroll devices</h2>
+         <p>User name
+            <input type="text" id="usrname" name="name" />
+         </p>
+         <p>Email
+            <input type="eamil" id="usremail" name="email" />
+         </p>
+         <p>Device type
+                  <select id="devicetype">
+                              <option value="apple">Apple 
+                                  <option value="android">Android
+                          </select>
+         </p>
+         <input type="button" onclick="enroll()" value="Enroll ">
+      </div>
+      <hr>
+
+
+      <div style="background-color:#bbb;">
+         <h2>Deregister User</h2>
+         <p>Email
+            <input type="text" id="emailderegister" name="emailderegister" />
+         </p>
+         <input type="button" onclick="DeRegisterUser()" value="Deregister">
+      </div>
+      <form method="get" id="loginForm" action="/meem/pageloader/sign-in">
+      </form>
+      <form method="get" id="regForm" action="/meem/pageloader/sign-up">
+      </form>
+      <hr>
+      <div class="add-info" style="background-color:#aaa;">
+         <span class="rightfloat">
+         <span class="red">
+         <span id="display">
+         </span>
+         </span>
+         </span>
+      </div>
+      <script>
+         function sendEnrollDetails() {
+         
+         var name = document.getElementById("name").value;
+         var email = document.getElementById("email").value;
+         var countrycode = document.getElementById("countrycode").value;
+         var x = document.getElementById("display");
+         
+         xhttp = new XMLHttpRequest();
+         var url = "/meem/enrollment/gencsr";
+         xhttp.open("POST", url, true);
+         xhttp.setRequestHeader("Content-type", "application/json");
+         xhttp.onreadystatechange = function () {
+         if (xhttp.readyState == 4 && xhttp.status == 200) {
+         var json = JSON.parse(xhttp.responseText);
+         console.log(json.email + ", " + json.name)
+         }
+         if (xhttp.readyState == XMLHttpRequest.DONE) {
+         alert(xhttp.responseText);
+         x.innerHTML = xhttp.responseText;
+         x.style.display = "block";
+         x.style.border = "thin dotted red";
+         }
+         }
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var data = JSON.stringify({ "tokenID": tokenID, "type": "apple", "req": { "name": name, "email": email, "countrycode": countrycode } });
+         xhttp.send(data);
+         }
+         
+         function getDevicesList() {
+         
+         var xhttp = new XMLHttpRequest();
+         var x = document.getElementById("display");
+         
+         xhttp.onreadystatechange = function () {
+         
+         
+         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+         // Typical action to be performed when the document is ready:
+         
+         x.innerHTML = xhttp.responseText;
+         x.style.display = "block";
+         x.style.border = "thin dotted red";
+         
+         }
+         else if (this.readyState == XMLHttpRequest.DONE && this.status == 406) {
+         // Typical action to be performed when the document is ready:
+         alert(xhttp.responseText)
+         
+         }
+         
+         };
+         
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var url = "/meem/enrollment/listdevices?tokenID=" + tokenID;
+         
+         xhttp.open("GET", url, true);
+         xhttp.send();
+         
+         }
+         
+         function getSettings() {
+         
+         var xhttp = new XMLHttpRequest();
+         var x = document.getElementById("display");
+         
+         xhttp.onreadystatechange = function () {
+         
+         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+         // Typical action to be performed when the document is ready:
+         
+         x.innerHTML = xhttp.responseText;
+         x.style.display = "block";
+         x.style.border = "thin dotted red";
+         
+         }
+         else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) {
+         // Typical action to be performed when the document is ready:
+         
+         alert(xhttp.responseText)
+         
+         }
+         
+         };
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var url = "/meem/enrollment/settings?tokenID=" + tokenID;
+         
+         xhttp.open("GET", url, true);
+         xhttp.send();
+         
+         }
+         
+         function getAppleCertificate() {
+         
+         var xhttp = new XMLHttpRequest();
+         var x = document.getElementById("display");
+         
+         xhttp.onreadystatechange = function () {
+         
+         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+         // Typical action to be performed when the document is ready:
+         
+         x.innerHTML = xhttp.responseText;
+         x.style.display = "block";
+         x.style.border = "thin dotted red";
+         
+         }
+         else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) {
+         // Typical action to be performed when the document is ready:
+         
+         alert(xhttp.responseText)
+         
+         
+         }
+         
+         };
+         
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var url = "/meem/enrollment/applecertificate?tokenID=" + tokenID;
+         
+         xhttp.open("GET", url, true);
+         xhttp.send();
+         
+         }
+         
+         function LogoutUser() {
+         
+         xhttp = new XMLHttpRequest();
+         var url = "/meem/auth/logout";
+         xhttp.open("POST", url, true);
+         xhttp.setRequestHeader("Content-type", "application/json");
+         
+         xhttp.onreadystatechange = function () {
+         if (xhttp.readyState == 4 && xhttp.status == 200) {
+         
+         updateTokenID("");
+         loadLoginPage();
+         }
+         
+         }
+         
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var data = JSON.stringify({ "tokenID": tokenID });
+         xhttp.send(data);
+         }
+         
+         function DeRegisterUser() {
+         
+         var email = document.getElementById("emailderegister").value;
+         
+         xhttp = new XMLHttpRequest();
+         var url = "/meem/auth/deregister";
+         xhttp.open("POST", url, true);
+         xhttp.setRequestHeader("Content-type", "application/json");
+         
+         xhttp.onreadystatechange = function () {
+         if (xhttp.readyState == 4 && xhttp.status == 200) {
+         
+         alert("DeRegister Success");
+         updateTokenID("");
+         loadRegistrationPage();
+         }
+         
+         }
+         
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var data = JSON.stringify({ "tokenID": tokenID, "email": email });
+         xhttp.send(data);
+         }
+         
+         
+         function DownloadApns() {
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         alert(tokenID);
+         document.getElementById('AuthtokenInDownload').value = tokenID;
+         
+         }
+         
+         function UploadFile() {
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         alert(tokenID);
+         document.getElementById('Authtoken').value = tokenID;
+         
+         
+         // xhttp = new XMLHttpRequest();
+         // var url = "/meem/enrollment/applepemupload";
+         // xhttp.open("POST", url, true);
+         // xhttp.setRequestHeader("Content-type","multipart/form-data; boundary=MultipartBoundry");
+         
+         // xhttp.onreadystatechange = function () {
+         // if (xhttp.readyState == 4 && xhttp.status == 200) {
+         
+         
+         // }
+         // }
+         
+         // // var fileInputform = document.getElementById('uploadform');
+         // // fileInputform.tokenID.value = sessionStorage.getItem("token", tokenID);
+         // // var formData = new FormData(fileInputform);
+         
+         // var fileInput = document.getElementById('the-file');
+         
+         
+         
+         // var file = fileInput.files[0];
+         // var formData = new FormData();
+         // formData.append('userFile', file);
+         // formData.append(MultipartBoundry);
+         // formData.append('tokenID', token);
+         
+         
+         // var tokenID = sessionStorage.getItem("token", tokenID);
+         // var data = JSON.stringify({ "tokenID": tokenID});
+         
+         
+         // enctype="multipart/form-data"
+         // // xhttp.setRequestHeader('Content-Type','application/json');
+         
+         // // formData.append(data);
+         // xhttp.send(formData);
+         }
+         
+         
+         function updateTokenID(tokenID) {
+         
+         sessionStorage.setItem("token", tokenID);
+         }
+         
+         function loadLoginPage() {
+         
+         document.getElementById('loginForm').submit();
+         }
+         
+         function loadRegistrationPage() {
+         
+         document.getElementById('regForm').submit();
+         }
+         
+
+
+         function enroll() {
+         
+         var name = document.getElementById("usrname").value;
+         var email = document.getElementById("usremail").value;
+         var device = document.getElementById("devicetype").value;
+         
+         xhttp = new XMLHttpRequest();
+         var url = "/meem/enrollment/enroll";
+         xhttp.open("POST", url, true);
+         xhttp.setRequestHeader("Content-type", "application/json");
+         xhttp.onreadystatechange = function () {
+         if (xhttp.readyState == 4 && xhttp.status == 200) {
+            alert("opt sent to email");
+         }
+         if (xhttp.readyState == XMLHttpRequest.DONE) {
+         //alert(xhttp.responseText);
+         x.innerHTML = xhttp.responseText;
+         x.style.display = "block";
+         x.style.border = "thin dotted red";
+         }
+         }
+         var tokenID = sessionStorage.getItem("token", tokenID);
+         var data = JSON.stringify({ "tokenID": tokenID, "type": device, "req": { "name": name, "email": email} });
+         xhttp.send(data);
+         }
+
+
+         
+      </script>
+   </body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+  <title>ServiceStack Send Complex Form (Synchronously)</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <style>
+    label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="background-color:#bbb;">
+
+    <h2>Enter Registration Details </h2>
+
+    <p>Name
+      <input type="text" id="namereg" name="namereg" />
+    </p>
+    <p>Email
+      <input type="text" id="emailreg" name="emailreg" />
+    </p>
+    <p>Password
+      <input type="password" id="passwordreg" name="passwordreg" />
+    </p>
+    <p>
+      <button onclick="resgisterUser()">Register</button>
+    </p>
+  </div>
+  <form method="get" id="loginForm" action="/meem/pageloader/sign-in">
+  </form>
+
+
+  <script>
+
+    function resgisterUser() {
+
+      var name = document.getElementById("namereg").value;
+      var password = document.getElementById("passwordreg").value;
+      var email = document.getElementById("emailreg").value;
+
+      xhttp = new XMLHttpRequest();
+      var url = "/meem/auth/register";
+      xhttp.open("PUT", url, true);
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 201) {
+
+          var json = JSON.parse(xhttp.responseText);
+          alert("Registration Success");
+          //  updateTokenID(json.tokenID);
+          loadLoginPage();
+
+        }
+        if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 401) {
+          var json = JSON.parse(xhttp.responseText);
+          if (json.message == "UnAuthorized, all fields are required") {
+
+            alert("UnAuthorized, all fields are required");
+          }
+          if (json.message == "email ID already registered") {
+
+            alert("Email ID already registered");
+            loadLoginPage();
+
+          }
+
+        }
+      }
+      var data = JSON.stringify({ "username": name, "password": password, "email": email });
+      xhttp.send(data);
+    }
+
+
+
+    function updateTokenID(tokenID) {
+
+      sessionStorage.setItem("token", tokenID);
+    }
+
+    function loadLoginPage() {
+
+      document.getElementById('loginForm').submit();
+    }
+
+  </script>
+
+
+
+
+  <div class="add-info">
+    <span class="rightfloat">
+      <span class="red">
+        <span id="display">
+
+        </span>
+      </span>
+    </span>
+  </div>
+
+
+</body>
+
+</html>

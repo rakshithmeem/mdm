@@ -1,0 +1,997 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 400px;
+            /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Select Profile</h2>
+
+    <select id="profilelist" name="profile">
+        <option value="adddevicefunctionality" type="text">Device Functionality</option>
+        <option value="adddevicesecurity" type="text">Device Security</option>
+        <option value="adddeviceadvancedsecurity" type="text">Device Advanced Security</option>
+        <option value="icloud" type="text">iCloud Configuration</option>
+        <option value="browser" type="text">Safari Configuration</option>
+        <option value="network" type="text">Network</option>
+        <option value="addmanagedemail" type="text">Email Configation</option>
+        <option value="passcode" type="text">PassCode Configuration</option>
+        <option value="editprofiles" type="text">Edit Profiles</option>
+
+    </select>
+    <br>
+    <br>
+
+
+    <div id="devicefunctionality_info_div" style="display: block;">
+        <div style="background-color:#bbb;">
+            <h2>Device Functionality</h2>
+            <p>Profile Name
+                <input type="text" id="functionalityprofilename" name="functionalityprofilename" />
+            </p>
+            <input id="camera" type="checkbox" name="camera">Allow Camera
+            <br>
+            <input id="screeshot" type="checkbox" name="screeshot">Allow Screen shot
+            <br>
+            <input id="voicedialing" type="checkbox" name="voicedialing">Allow Voice Dialing
+            <br>
+            <input id="assistant" type="checkbox" name="assistant">Allow Assistant
+            <br>
+            <input id="assistantwhilelocked" type="checkbox" name="assistantwhilelocked">Allow Assistant While Locked
+            <br>
+            <input id="activitycontinuation" type="checkbox" name="activitycontinuation">Allow Activity Continuation
+            <br>
+            <p>
+                <button onclick="sendDeviceFunctionalityDetails()">Apply</button>
+            </p>
+        </div>
+
+
+
+    </div>
+
+    <div id="devicesecurity_info_div" style="display: none;background-color:#bbb">
+        <h2>Device Security</h2>
+        <p>Profile Name
+            <input type="text" id="securityprofilename" name="securityprofilename" />
+        </p>
+        <input id="openfrommanagedtounmanaged" type="checkbox" name="openfrommanagedtounmanaged">Allow Open from Managed to Unmanaged
+        <br>
+        <input id="openfromunmanagedtomanaged" type="checkbox" name="openfromunmanagedtomanaged">Allow Open from Unmanaged to Managed
+        <br>
+        <input id="forceencryptedbackup" type="checkbox" name="forceencryptedbackup">Allow Force Encrypted Backup
+        <br>
+        <input id="allowpassbookwhilelocked" type="checkbox" name="allowpassbookwhilelocked">Allow Passbook while Locked
+        <br>
+        <input id="allowfingerprintforunlock" type="checkbox" name="allowfingerprintforunlock">Allow Finger Print for unlock
+        <br>
+        <p>
+            <button onclick="sendDeviceSecurityDetails()">Apply</button>
+        </p>
+        <br>
+
+    </div>
+
+    <div id="deviceadvancedsecurity_info_div" style="display: none;background-color:#bbb">
+        <h2>Advanced Device Security</h2>
+        <p>Profile Name
+            <input type="text" id="advancedsecurityprofilename" name="advancedsecurityprofilename" />
+        </p>
+        <input id="allowuntrustedTLSprompt" type="checkbox" name="allowuntrustedTLSprompt">Allow Untrusted TLS Prompt
+        <br>
+        <input id="forceitunesstorepasswordentry" type="checkbox" name="forceitunesstorepasswordentry">Force iTunes Store Password Entry
+        <br>
+        <input id="forcewatchwristdetection" type="checkbox" name="forcewatchwristdetection">Force Watch Wrist Detection
+        <br>
+        <p>
+            <button onclick="sendAdvancedDeviceSecurityDetails()">Apply</button>
+
+        </p>
+
+    </div>
+
+    <div id="passcode_info_div" style="background-color:#bbb;display: none">
+        <h2>Passcode Profile</h2>
+
+        <p>Passcode Profile Name
+            <input type="text" id="passcodeprofilename" name="passcodeprofilename" />
+        </p>
+        <input id="allowsimple" type="checkbox" name="allowsimple">Allow Simple
+        <br>
+        <input id="requirealphanumeric" type="checkbox" name="requirealphanumeric">Require Alphanumeric
+        <br>
+
+        <br>
+        <br>Min Length
+        <input id="minlength" type="number" name="">
+        <br>
+        <br>Min Complex Chars
+        <input id="mincomplexchars" type="number" name="">
+        <br>
+        <br>Max PIN Age in Days
+        <input id="maxpinageindays" type="number" name="">
+        <br>
+        <br>Max Inactivity
+        <input id="maxinactivity" type="number" name="">
+        <br>
+        <br>Pin History
+        <input id="pinhistory" type="number" name="">
+        <br>
+        <br>Max Grace Period
+        <input id="maxgraceperiod" type="number" name="">
+        <br>
+        <br>Max Failed Attempts
+        <input id="maxfailedattempts" type="number" name="">
+        <br>
+
+        <p>
+            <button onclick="sendPasscodeDetails()">Apply</button>
+        </p>
+
+    </div>
+
+
+    <div id="icloud_info_div" style="background-color:#bbb;display: none">
+        <p>Profile Name
+            <input type="text" id="icloudprofilename" name="icloudprofilename" />
+        </p>
+        <p>OS
+            <select id="oslist" name="oslist">
+                <option value="Apple" type="text">Android</option>
+                <option value="Android" type="text">Apple</option>
+            </select>
+            <p>
+
+                <input id="allowcloudbackup" type="checkbox" name="allowcloudbackup">Allow Cloud Backup
+                <br>
+                <input id="allowclouddcocumentsync" type="checkbox" name="allowclouddcocumentsync">Allow Cloud Document Sync
+                <br>
+                <input id="allowphotostream" type="checkbox" name="allowphotostream">Allow Photo Stream
+                <br>
+                <input id="allowcloudkeychainsync" type="checkbox" name="allowcloudkeychainsync">Allow Cloud KeyChain Sync
+                <br>
+                <input id="allowcloudphotolibrary" type="checkbox" name="allowcloudphotolibrary">Allow Cloud Photo Library
+                <br>
+                <input id="allowsharedstream" type="checkbox" name="allowsharedstream">Allow Shared Stream
+                <br>
+                <input id="allowenterprisebookbackup" type="checkbox" name="allowenterprisebookbackup">Allow Enterprise Book backup
+                <br>
+                <input id="allowenterprisebookmetadatasync" type="checkbox" name="allowenterprisebookmetadatasync">Allow Enterprise Book Meta data Sync
+                <br>
+
+
+                <p>
+                    <button onclick="sendiCloudRestrictions()">Apply</button>
+                </p>
+    </div>
+
+    <div id="browser_info_div" style="background-color:#bbb;display: none">
+        <p>Profile Name
+            <input type="text" id="browserprofilename" name="browserprofilename" />
+        </p>
+
+
+        <input id="allowsafari" type="checkbox" name="allowsafari">Enable Safari
+        <br>
+        <input id="safariallowautofill" type="checkbox" name="safariallowautofill">Safari Autofil
+        <br>
+        <input id="safariforcefraudwarning" type="checkbox" name="safariforcefraudwarning">Safari Fraud Warning
+        <br>
+        <input id="safariallowjavascript" type="checkbox" name="safariallowjavascript">Allow JavaScript in Safari
+        <br>
+        <input id="safariallowpopups" type="checkbox" name="safariallowpopups">Allow Popups in Safari
+        <br>
+
+        <input id="safariacceptcookies" type="number" name="">
+
+        <p>
+            <button onclick="sendBrowserRestrictions()">Apply</button>
+        </p>
+    </div>
+
+    <div id="network_info_div" style="background-color:#bbb;display: none">
+        <p>Profile Name
+            <input type="text" id="networkprofilename" name="networkprofilename" />
+        </p>
+
+        <input id="allowglobalbackgroundfetch" type="checkbox" name="allowglobalbackgroundfetch">Allow Global Background Fetch
+        <p>
+            <button onclick="sendNetworkRestrictions()">Apply</button>
+        </p>
+    </div>
+
+
+    <div id="email_info_div" style="background-color:#bbb;display: none;">
+        <h1>Email Profile</h1>
+
+        <p>Profile Name
+            <input type="text" id="emailprofilename" name="emailprofilename" />
+        </p>
+        <p>Email Account Description
+            <input type="text" id="EmailAccountDescription" name="EmailAccountDescription" />
+        </p>
+        <p>Account Display
+            <input type="text" id="AccountDisplay" name="AccountDisplay" />
+        </p>
+
+        <p>Account Type
+            <select id="accountType">
+                <option value="EmailTypeIMAP">IMAP
+                    <option value="EmailTypePOP">POP
+            </select>
+        </p>
+
+        <p>Path Prefix
+            <input type="text" id="pathprefix" name="pathprefix" />
+        </p>
+
+        <p>Sender Name
+            <input type="text" id="senderName" name="senderName" />
+            <label>Note: type email ID </label>
+        </p>
+
+        <p>Sender E-Mail Address
+            <input type="text" id="senderEmail" name="senderEmail" />
+            <label>Note: type email ID </label>
+        </p>
+
+        <p>Prevent Moving Messages to other Mail Accounts
+            <select id="preventMovingMsgMailAcc">
+                <option value=false>No
+                    <option value=true>Yes
+            </select>
+        </p>
+        <p>Disable recent mail address sync
+            <select id="disableRecentMailSync">
+                <option value=false>No
+                    <option value=true>Yes
+            </select>
+        </p>
+        <hr>
+        <h2>Incoming Mail </h2>
+
+        <p>Mail Server
+            <input type="text" id="incmgMailserver" name="incmgMailserver" />
+        </p>
+
+        <p>Port
+            <input type="text" id="incmgMailserverPort" name="incmgMailserverPort" />
+        </p>
+
+        <p>User Name
+            <input type="text" id="incmgMailserverUsrName" name="incmgMailserverUsrName" />
+            <label>Note: type email ID </label>
+        </p>
+
+        <p>Authentication Type
+            <select id="incmgMailserverAthuType">
+                <option value="EmailAuthNone">None
+            </select>
+        </p>
+
+        <p>Use SSL for mail communication
+            <select id="incmgMailserverSsl">
+                <option value=true>Yes
+                    <option value=false>No
+            </select>
+        </p>
+
+
+        <hr>
+        <h2>Outgoing Mail </h2>
+
+        <p>Mail Server
+            <input type="text" id="outgoingMailserver" name="outgoingMailserver" />
+        </p>
+
+        <p>Port
+            <input type="text" id="outgoingMailserverPort" name="outgoingMailserverPort" />
+        </p>
+
+        <p>User Name
+            <input type="text" id="outgoingMailserverUsrName" name="outgoingMailserverUsrName" />
+            <label>Note: type email ID </label>
+        </p>
+
+        <p>Authentication Type
+            <select id="outgoingMailserverAthuType">
+                <option value="EmailAuthNone">None
+            </select>
+        </p>
+
+        <p>Use SSL for mail communication
+            <select id="outgoingMailserverSsl">
+                <option value=true>Yes
+                    <option value=false>No
+            </select>
+        </p>
+
+        <p>Use Outgoing Password Same as Incoming
+            <select id="outgoingIncomingMailserverSamePass">
+                <option value=true>Yes
+                    <option value=false>No
+            </select>
+        </p>
+
+
+        <p>Block Account usage from non-Mail Apps
+            <select id="blockAccUsgFrmNonMailApps">
+                <option value=false>No
+                    <option value=true>Yes
+            </select>
+        </p>
+
+        <p>Enable S/MIME to encrypt or decrypt Mails
+            <select id="enableCrypto">
+                <option value=false>No
+                    <option value=true>Yes
+            </select>
+        </p>
+        <hr>
+        <p>
+            <button onclick="sendEmailAccDetails()">Apply</button>
+        </p>
+    </div>
+
+    <div id="editprofiles_div" style="background-color:#bbb;display: none">
+        <div>
+            <h2>Profile</h2>
+
+            <select id="profileaction">
+                <option value="create">Create
+                    <option value="update">Update
+                        <option value="deploy">Deploy
+                            <option value="delete">Delete
+            </select>
+
+        </div>
+        <div id="profname_div" style="display: block">
+            <p>Profile Name
+                <input type="text" id="profilename" name="namelogin" />
+            </p>
+
+        </div>
+
+        <div id="devicename_div" style="background-color:#bbb;display: none">
+            <select id="devices" onchange="show(this)">
+                <option value="">-- Select --</option>
+            </select>
+        </div>
+
+        <div id="newprofname_div" style="display: none">
+            <p>New Profile Name
+                <input type="text" id="newprofilename" name="namelogin" />
+            </p>
+
+        </div>
+        <div id="profdescription_div" style="display: block">
+            <h2>Description</h2>
+            <textarea id="profiledescription" rows="4" cols="50">Enter Description here!!</textarea>
+        </div>
+
+        <p>
+            <button onclick="doProfileAction()">Apply Changes</button>
+        </p>
+
+
+    </div>
+
+
+    <script>
+
+
+        document.getElementById('profilelist').addEventListener('change', function () {
+            var style = this.value == "addmanagedemail" ? 'block' : 'none';
+            document.getElementById('email_info_div').style.display = style;
+            style = this.value == "adddevicefunctionality" ? 'block' : 'none';
+            document.getElementById('devicefunctionality_info_div').style.display = style;
+            style = this.value == "adddevicesecurity" ? 'block' : 'none';
+            document.getElementById('devicesecurity_info_div').style.display = style;
+            style = this.value == "adddeviceadvancedsecurity" ? 'block' : 'none';
+            document.getElementById('deviceadvancedsecurity_info_div').style.display = style;
+            style = this.value == "icloud" ? 'block' : 'none';
+            document.getElementById('icloud_info_div').style.display = style;
+            style = this.value == "browser" ? 'block' : 'none';
+            document.getElementById('browser_info_div').style.display = style;
+            style = this.value == "network" ? 'block' : 'none';
+            document.getElementById('network_info_div').style.display = style;
+            style = this.value == "passcode" ? 'block' : 'none';
+            document.getElementById('passcode_info_div').style.display = style;
+            style = this.value == "editprofiles" ? 'block' : 'none';
+            document.getElementById('editprofiles_div').style.display = style;
+
+        });
+
+        document.getElementById('profileaction').addEventListener('change', function () {
+
+            var visible = 'block';
+            var notvisible = 'none';
+
+            if (this.value == "create") {
+
+                document.getElementById('profname_div').style.display = visible;
+                document.getElementById('devicename_div').style.display = notvisible;
+                document.getElementById('newprofname_div').style.display = notvisible;
+                document.getElementById('profdescription_div').style.display = visible;
+            }
+            else if (this.value == "update") {
+                document.getElementById('profname_div').style.display = visible;
+                document.getElementById('devicename_div').style.display = notvisible;
+                document.getElementById('newprofname_div').style.display = visible;
+                document.getElementById('profdescription_div').style.display = visible;
+            }
+            else if (this.value == "deploy") {
+                document.getElementById('profname_div').style.display = visible;
+                document.getElementById('devicename_div').style.display = visible;
+                document.getElementById('newprofname_div').style.display = notvisible;
+                document.getElementById('profdescription_div').style.display = notvisible;
+                getDevicesList();
+            }
+            else if (this.value == "delete") {
+                document.getElementById('profname_div').style.display = visible;
+                document.getElementById('devicename_div').style.display = visible;
+                document.getElementById('newprofname_div').style.display = notvisible;
+                document.getElementById('profdescription_div').style.display = notvisible;
+                getDevicesList();
+            }
+
+        });
+
+
+        function sendDeviceFunctionalityDetails() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("functionalityprofilename").value;
+            var type = "devicefunctionality";
+
+            var data = JSON.stringify({
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowCamera": document.getElementById("camera").checked,
+                "allowScreenshot": document.getElementById("screeshot").checked,
+                "allowVoiceDialing": document.getElementById("voicedialing").checked,
+                "allowAssistant": document.getElementById("assistant").checked,
+                "allowAssistantWhileLocked": document.getElementById("assistantwhilelocked").checked,
+                "allowActivityContinuation": document.getElementById("activitycontinuation").checked
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+        function sendDeviceSecurityDetails() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("securityprofilename").value;
+            var type = "security";
+
+            var data = JSON.stringify({
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowOpenFromManagedToUnmanaged": document.getElementById("openfrommanagedtounmanaged").checked,
+                "allowOpenFromUnmanagedToManaged": document.getElementById("openfromunmanagedtomanaged").checked,
+                "forceEncryptedBackup": document.getElementById("forceencryptedbackup").checked,
+                "allowPassbookWhileLocked": document.getElementById("allowpassbookwhilelocked").checked,
+                "allowFingerprintForUnlock": document.getElementById("allowfingerprintforunlock").checked
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+        function sendAdvancedDeviceSecurityDetails() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("advancedsecurityprofilename").value;
+            var type = "advancedsecurity";
+
+            var data = JSON.stringify({
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowUntrustedTLSPrompt": document.getElementById("allowuntrustedTLSprompt").checked,
+                "forceITunesStorePasswordEntry": document.getElementById("forceitunesstorepasswordentry").checked,
+                "forceWatchWristDetection": document.getElementById("forcewatchwristdetection").checked
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+        function sendPasscodeDetails() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/passcode";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("passcodeprofilename").value;
+            var type = "advancedsecurity";
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "allowSimple": document.getElementById("allowsimple").checked,
+                "requireAlphanumeric": document.getElementById("requirealphanumeric").checked,
+
+                "minLength": document.getElementById("minlength").value,
+                "minComplexChars": document.getElementById("mincomplexchars").value,
+                "maxPINAgeInDays": document.getElementById("maxpinageindays").value,
+                "maxInactivity": document.getElementById("maxinactivity").value,
+                "pinHistory": document.getElementById("pinhistory").value,
+                "maxGracePeriod": document.getElementById("maxgraceperiod").value,
+                "maxFailedAttempts": document.getElementById("maxfailedattempts").value,
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+
+        function sendEmailAccDetails() {
+
+            var eamilPylaodversion = 1;
+            var profilePylaodversion = 1;
+            var profilename = document.getElementById("emailprofilename").value;
+            var emailAccDesc = document.getElementById("EmailAccountDescription").value;
+            var accDisp = document.getElementById("AccountDisplay").value;
+            var accType = document.getElementById("accountType").value;
+            var pathPrefix = document.getElementById("pathprefix").value;
+            var senderName = document.getElementById("senderName").value;
+            var senderEmail = document.getElementById("senderEmail").value;
+            var mvMails = document.getElementById("preventMovingMsgMailAcc").value == "true" ? true : false;
+            var disableSync = document.getElementById("disableRecentMailSync").value == "true" ? true : false;
+
+
+            var incmgMailserver = document.getElementById("incmgMailserver").value;
+            var incmgPort = document.getElementById("incmgMailserverPort").value;
+            var incmgusrName = document.getElementById("incmgMailserverUsrName").value;
+            var incmgAuthType = document.getElementById("incmgMailserverAthuType").value;
+            var incmgAuthSsl = document.getElementById("incmgMailserverSsl").value == "true" ? true : false;
+
+            var outgoingMailserver = document.getElementById("outgoingMailserver").value;
+            var outgoingPort = document.getElementById("outgoingMailserverPort").value;
+            var outgoingUsrName = document.getElementById("outgoingMailserverUsrName").value;
+            var outgoingAuthType = document.getElementById("outgoingMailserverAthuType").value;
+            var outgoingSsl = document.getElementById("outgoingMailserverSsl").value == "true" ? true : false;
+            var samePass = document.getElementById("outgoingIncomingMailserverSamePass").value == "true" ? true : false;
+            var blockNonMailapps = document.getElementById("blockAccUsgFrmNonMailApps").value == "true" ? true : false;
+            var enableCrypto = document.getElementById("enableCrypto").value == "true" ? true : false;
+
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/email";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+
+            var data = JSON.stringify({
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "org": "Meem Memory pvt ltd",
+                "eamilPayloadVer": eamilPylaodversion,
+                "profilePayloadVer": profilePylaodversion,
+                "EmailAccountDescription": emailAccDesc,
+                "AccountDisplay": accDisp,
+                "accountType": accType,
+                "pathprefix": pathPrefix,
+                "senderName": senderName,
+                "senderEmail": senderEmail,
+                "preventMovingMsgMailAcc": mvMails,
+                "disableRecentMailSync": disableSync,
+
+                "incoming": {
+                    "mailServer": incmgMailserver,
+                    "port": incmgPort,
+                    "userName": incmgusrName,
+                    "authType": incmgAuthType,
+                    "ssl": incmgAuthSsl
+                },
+                "outgoing": {
+                    "mailServer": outgoingMailserver,
+                    "port": outgoingPort,
+                    "userName": outgoingUsrName,
+                    "authType": outgoingAuthType,
+                    "ssl": outgoingSsl,
+                    "outgoingIncomingMailserverSamePass": samePass,
+                    "blockAccUsgFrmNonMailApps": blockNonMailapps,
+                    "enableCrypto": enableCrypto
+                }
+            });
+
+            xhttp.send(data);
+
+        }
+
+
+        function createProfile() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/create";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("profilename").value;
+            var description = document.getElementById("profiledescription").value;
+
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "description": description
+
+
+            });
+            xhttp.send(data);
+
+        }
+
+        function updateProfile() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/update";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("profilename").value;
+            var newprofilename = document.getElementById("newprofilename").value;
+            var description = document.getElementById("profiledescription").value;
+
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profileoldname": profilename,
+                "profilenewname": newprofilename,
+                "description": description
+
+            });
+            xhttp.send(data);
+
+        }
+
+        function deployProfile() {
+
+            xhttp = new XMLHttpRequest();
+
+            var url = "/meem/profiles/deploy";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("profilename").value;
+            var deviceID = document.getElementById("devices").value;
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "deviceID": deviceID
+
+            });
+            xhttp.send(data);
+
+        }
+
+        function deleteProfile() {
+
+            xhttp = new XMLHttpRequest();
+
+            var url = "/meem/profiles/delete";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("profilename").value;
+            var deviceID = document.getElementById("devices").value;
+
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "deviceID": deviceID
+            });
+            xhttp.send(data);
+
+        }
+
+        function doProfileAction() {
+
+            var profileaction = document.getElementById('profileaction').value;
+
+            if (profileaction == "create") {
+                createProfile();
+            }
+            else if (profileaction == "update") {
+                updateProfile();
+            }
+            else if (profileaction == "deploy") {
+                deployProfile();
+            }
+            else if (profileaction == "delete") {
+                deleteProfile();
+            }
+        }
+
+        function getDevicesList() {
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    // Typical action to be performed when the document is ready:
+
+                    var ele = document.getElementById('devices');
+
+                    var deviceListObj = JSON.parse(xhttp.responseText);
+
+                    for (var i = 0; i < deviceListObj.length; i++) {
+
+                        var mainObj = deviceListObj[i];
+                        var deviceMainObj = mainObj["devices"];
+                        var deviceid = deviceMainObj["deviceid"];
+                        var deviceObj = deviceMainObj["Device"];
+                        var devicename = deviceObj["name"];
+
+                        // POPULATE SELECT ELEMENT WITH JSON.
+                        ele.innerHTML = ele.innerHTML +
+                            '<option value="' + deviceid + '">' + devicename + '</option>';
+                    }
+
+                }
+                else if (this.readyState == XMLHttpRequest.DONE && this.status == 406) {
+                    alert(xhttp.responseText)
+                }
+
+            };
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var url = "/meem/enrollment/listdevices?tokenID=" + tokenID;
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+
+
+        }
+
+
+        function sendiCloudRestrictions() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions/icloud";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("icloudprofilename").value;
+            var type = "icloud";
+            var os = document.getElementById("oslist").value;
+            var allowcloudbackup = document.getElementById("allowcloudbackup").checked;
+            var allowclouddcocumentsync = document.getElementById("allowclouddcocumentsync").checked;
+            var allowphotostream = document.getElementById("allowphotostream").checked;
+            var allowcloudkeychainsync = document.getElementById("allowcloudkeychainsync").checked;
+            var allowcloudphotolibrary = document.getElementById("allowcloudphotolibrary").checked;
+            var allowsharedstream = document.getElementById("allowsharedstream").checked;
+            var allowenterprisebookbackup = document.getElementById("allowenterprisebookbackup").checked;
+            var allowenterprisebookmetadatasync = document.getElementById("allowenterprisebookmetadatasync").checked;
+
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowCloudBackup": allowcloudbackup,
+                "allowCloudDocumentSync": allowclouddcocumentsync,
+                "allowPhotoStream": allowphotostream,
+                "allowSharedStream": allowsharedstream,
+
+                "allowCloudKeychainSync": allowcloudkeychainsync,
+                "allowCloudPhotoLibrary": allowcloudphotolibrary,
+                "allowEnterpriseBookBackup": allowenterprisebookbackup,
+                "allowEnterpriseBookMetadataSync": allowenterprisebookmetadatasync
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+        function sendBrowserRestrictions() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions/icloud";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("browserprofilename").value;
+            var type = "browser";
+            var allowsafari = document.getElementById("allowsafari").checked;
+            var safariallowautofill = document.getElementById("safariallowautofill").checked;
+            var safariforcefraudwarning = document.getElementById("safariforcefraudwarning").checked;
+            var safariallowjavascript = document.getElementById("safariallowjavascript").checked;
+            var safariallowpopups = document.getElementById("safariallowpopups").checked;
+            var safariacceptcookies = document.getElementById("safariacceptcookies").value;
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowSafari": allowsafari,
+                "safariAllowAutoFill": safariallowautofill,
+                "safariForceFraudWarning": safariforcefraudwarning,
+                "safariAllowJavaScript": safariallowjavascript,
+                "safariAllowPopups": safariallowpopups,
+                "safariAcceptCookies": safariacceptcookies
+
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+
+        function sendNetworkRestrictions() {
+
+            xhttp = new XMLHttpRequest();
+            var url = "/meem/profiles/restrictions/network";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE && xhttp.status == 200) {
+
+                }
+
+            }
+
+            var tokenID = sessionStorage.getItem("token", tokenID);
+            var profilename = document.getElementById("networkprofilename").value;
+            var type = "network";
+            var allowglobalbackgroundfetch = document.getElementById("allowglobalbackgroundfetch").checked;
+
+            var data = JSON.stringify({
+
+                "tokenID": tokenID,
+                "profilename": profilename,
+                "type": type,
+                "allowGlobalBackgroundFetchWhenRoaming": allowglobalbackgroundfetch
+
+            });
+
+            xhttp.send(data);
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

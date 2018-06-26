@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+</head>
+
+<body>
+
+  <form action="/meem/enrollment/download-profile" method="get">
+    <h2>Install MDM Profile</h2>
+    <p>
+      <input type="hidden" name="tokenID" value="-----" id="enrollconfigDownload" />
+      <button type="submit" onclick="enrolldownload()" value="Submit">Download</button>
+    </p>
+  </form>
+
+  <form action="/meem/enrollment/download-CA" method="get">
+    <h2>Download CA</h2>
+    <p>
+      <input type="hidden" name="tokenID" value="-----" id="caDownload" />
+      <button type="submit" onclick="cadownload()" value="Submit">Download</button>
+    </p>
+  </form>
+
+  <script>
+    function cadownload() {
+      var tokenID = sessionStorage.getItem("token", tokenID);
+      alert(tokenID);
+      document.getElementById('caDownload').value = tokenID;
+    }
+
+    function enrolldownload() {
+      var tokenID = sessionStorage.getItem("token", tokenID);
+      document.getElementById('enrollconfigDownload').value = tokenID;
+    }
+  </script>
+
+</body>
+
+</html>
