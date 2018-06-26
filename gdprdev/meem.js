@@ -47,7 +47,7 @@ app.use('/meem', meemApp);
 if (constants.MICROSOFT_AZURE) {
     console.log("connecting to http");
     var http = require('http');
-    http.createServer(app).listen(process.env.PORT || 3000);
+    http.createServer(app).listen(process.env.PORT || 8080);
     module.exports = app;
 } else if (constants.LOCAL_SERVER) {
     var key = fs.readFileSync('./vendor/certs/ssl/Server.key');
