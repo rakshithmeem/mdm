@@ -156,7 +156,7 @@ function gen_enroll_mobileconfig() {
             {
                 "AccessRights": 8191,
                 "CheckInURL": checkinurl,
-                "CheckOutWhenRemoved": false,
+                "CheckOutWhenRemoved": true,
                 "IdentityCertificateUUID": identityCerUUID,
                 "PayloadDescription": "Configures MobileDeviceManagement.",
                 "PayloadIdentifier": "com.apple.mdm." + pauloadUUID_accessrights,

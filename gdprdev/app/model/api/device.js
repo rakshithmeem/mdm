@@ -130,6 +130,25 @@ module.exports.getFileEntry = function (deviceId) {
     return promise;
 }
 
+module.exports.deleteDeviceEntry = function(deviceId){
+    var promise = new Promise(function (resolve, reject) {
+
+        Device.findOneAndRemove({ 'deviceId': deviceId }, function (err, device) {
+            device.save(function (err) {
+                if (err) {
+                    console.log('Error in deleting device ' + err)
+                    reject(err)
+                }
+                else {
+                    console.log('Device deleted');
+                    resolve('Device deleted');
+                }
+            })
+        })
+    })
+    return promise;
+}
+
 module.exports.deleteFileEntry = function (deviceId, fileId) {
 
     //console.log(deviceId+' '+fileId);
@@ -220,14 +239,15 @@ module.exports.removeProfile = function (deviceId) {
 
 module.exports.addUser = function (userDetail, tokenId) {
     authentication.fetchIdByTokenId(tokenId, function (Id) {
-        Device.findOneAndUpdate({'admin': Id, 'user.email': userDetail.email}, { '$set': { 'user': userDetail } }, { upsert: true, new: true }, function (err, device) {
+        Device.findOneAndUpdate({ "user.email": userDetail.email, "admin": Id }, {'$set': {'user': userDetail}}, 
+                                {upsert: true, new: true}, function(err, device){
             device.save(function (err) {
                 if (err)
-                    console.log('Error in saving the user entry ' + err)
+                    console.log('Error in saving user detail ' + err)
                 else
-                    console.log('ser entry saved');
+                    console.log('User entry saved!');
             })
-        })
+        });
     })
 }
 
@@ -236,8 +256,6 @@ module.exports.verifyOTP = function (enrollInfo) {
         console.log(JSON.stringify(enrollInfo));
 
         authentication.fetchIdByHash(enrollInfo.id, function (Id) {
-
-            console.log(Id+' '+enrollInfo.email);
             Device.findOne({ 'admin': Id, 'user.email': enrollInfo.email }, 'user', function (err, userObj) {
                 if (err) {
                     reject(err);

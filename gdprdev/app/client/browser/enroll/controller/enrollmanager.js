@@ -57,7 +57,7 @@ exports.downloadMobileConfig = function(req, res){
 
         var mobileConfigPath = global.__basedir + process.env.ADMIN_ACC_PATH + myObj.id+'/plists/enroll/Enroll.mobileconfig'
 
-        console.log('******'+mobileConfigPath)
+
         res.download(mobileConfigPath); // Set disposition and send it.
         //res.download("/Users/vignesh/MDM-workspace/meem_mdm_New/Enroll.mobileconfig"); // Set disposition and send it.
         //res.send(401,'Email-ID or OTP wrong please check again.');

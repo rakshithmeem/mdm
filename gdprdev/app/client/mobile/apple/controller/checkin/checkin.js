@@ -39,6 +39,15 @@ exports.ProcessDeviceChekinCommands = function (req, res) {
             res.end();
         })
 
+    } else if(json.MessageType == "CheckOut"){
+
+        device.deleteDeviceEntry(json.UDID).then(function(){
+            console.log('Data entry is deleted')
+            res.end();
+        }).catch(function(){
+            console.log('Error while removing data enrty');
+            res.end();
+        })
     }
     //res.end();
 

@@ -19,7 +19,6 @@ router.get('/download-profile', enroll.DownloadEnrollProfile);
 router.get('/download-CA', enroll.DownloadCA);
 
 
-// router.use('/applecertificate/', applecert);
 
 router.get('/mobileconfig', function (req, res) {
     enroll.downloadMobileConfig(req, res);

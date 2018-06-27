@@ -8,7 +8,7 @@ var deviceSchema = new mongoose.Schema({
     },
     deviceId: {
         type: String,
-        unique: true,
+        //unique: true,
         //default: null
         //required: true
     },
